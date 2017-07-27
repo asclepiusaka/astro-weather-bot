@@ -7,6 +7,7 @@ import urllib.request
 
 """
 python bot.py [port]
+port must be one out of 443, 80, 88,    8443
 """
 
 def handler(msg):
@@ -27,13 +28,13 @@ with open('token','r') as f:
 token = token.strip('/n')
 bot = telepot.Bot(token)
 port = int(sys.argv[1])
-url = 'http://saka.mdzz.info/'+token
+url = 'http://saka.mdzz.info:'+str(port)+'/'+token
 
 app = Flask(__name__)
 
 webhook = OrderedWebhook(bot,handler)
 
-@app.route(url,methods=['POST','GET'])
+@app.route('/'+token,methods=['POST','GET'])
 def pass_update():
     webhook.feed(request.data)
     return 'OK'

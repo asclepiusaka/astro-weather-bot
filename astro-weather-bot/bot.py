@@ -41,10 +41,12 @@ def pass_update():
 
 if __name__=='__main__':
     try:
-        bot.setWebhook(url)
+        f = open('PUBLICKEY.pem','r')
+        bot.setWebhook(url,f)
     except telepot.exception.TooManyRequestsError:
         pass
-
+    finally:
+        f.close()
     webhook.run_as_thread()
     app.run(port=port,debug=True)
 

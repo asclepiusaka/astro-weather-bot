@@ -12,14 +12,20 @@ port must be one out of 443, 80, 88,    8443
 
 def handler(msg):
     global bot
-    if 'location' not in msg['message']:
+    print(msg)
+    if 'location' not in msg:
         pass
     else:
-        location = msg['message']['location']
+        location = msg['location']
         base_api_url = 'http://202.127.24.18/v4/bin/astro.php?'
         param = {'lon':location['longitude'],'lat':location['latitude'],'output':'internal'}
         query_url = base_api_url+urllib.parse.urlencode(param)
-        bot.sendPhoto(msg['message']['chat']['id'],('astro.png',urllib.request.urlopen(query_url)))
+        pic_file,headers=urllib.request.urlretrieve(query_url)
+        pic = open(pic_file,'rb')
+        bot.sendPhoto(msg['chat']['id'],('astro.png',pic))
+        pic.close()
+        urllib.request.urlcleanup()
+
 
 
 with open('token','r') as f:

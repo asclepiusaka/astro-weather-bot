@@ -4,4 +4,4 @@ CREATE TABLE Locations(
     name TEXT NOT NULL,
     longitude real NOT NULL,
     latitude real NOT NULL
-)
+);
